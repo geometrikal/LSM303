@@ -257,6 +257,7 @@ void LSM303::read(void)
   readMag();
 }
 
+#ifdef LSM303_FLOAT
 // Returns the number of degrees from the -Y axis that it
 // is pointing.
 int LSM303::heading(void)
@@ -319,6 +320,7 @@ void LSM303::vector_normalize(vector *a)
   a->y /= mag;
   a->z /= mag;
 }
+#endif
 
 // Private Methods //////////////////////////////////////////////////////////////
 

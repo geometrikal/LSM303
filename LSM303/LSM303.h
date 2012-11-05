@@ -3,6 +3,8 @@
 
 #include <Arduino.h> // for byte data type
 
+//#define LSM303_FLOAT
+
 // device types
 
 #define LSM303DLH_DEVICE   0
@@ -93,10 +95,18 @@
 class LSM303
 {
   public:
+
+#ifdef LSM303_FLOAT
     typedef struct vector
     {
       float x, y, z;
     } vector;
+#else
+    typedef struct vector
+    {
+      int16_t x, y, z;
+    } vector;
+#endif
 
     vector a; // accelerometer readings
     vector m; // magnetometer readings
@@ -139,6 +149,7 @@ class LSM303
     unsigned int getTimeout(void);
     bool timeoutOccurred(void);
     
+#ifdef LSM303_FLOAT
     int heading(void);
     int heading(vector from);
     
@@ -146,6 +157,7 @@ class LSM303
     static void vector_cross(const vector *a, const vector *b, vector *out);
     static float vector_dot(const vector *a,const vector *b);
     static void vector_normalize(vector *a);
+#endif
     
   private:
     byte _device; // chip type (DLH, DLM, or DLHC)
